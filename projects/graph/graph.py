@@ -104,20 +104,28 @@ class Graph:
         while queue.size() > 0:
             # dequeue the first PATH
             current_path = queue.dequeue()
-            current_node = current_path[-1]
+            current_vertex = current_path[-1]
             # grab the last vertex in the path
             
             # if it hasn't been visited 
-            if current_node == destination_vertex:
+            if current_vertex == destination_vertex:
                 return current_path
                 # check if its the target 
-                
+
                     # Return the path 
+            else:
+                if current_vertex not in visited:
+                    visited.add(current_vertex)
+                    edges = self.get_neighbors(current_vertex)
                 # mark it as visited
                 # make new versions of the current path, with each neighbor added to them
                     # duplicate the path
                     # add the neighbor
                     # add the new path to the queue
+                for edge in edges:
+                    path_dup = list(current_path)
+                    path_dup.append(edge)
+                    queue.enqueue(path_dup)
 
 
         pass  # TODO
