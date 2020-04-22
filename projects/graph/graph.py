@@ -96,11 +96,16 @@ class Graph:
         breath-first order.
         """
         # create a empty queue, and enqueue a PATH to the starting vertex
+        queue = Queue()
         # queue.enqueue([starting_vertex])
         # create a set for visited vertices
+        queue.enqueue([starting_vertex])
         # while the queue is not empty
+        while queue.size() > 0:
             # dequeue the first PATH
+            
             # grab the last vertex in the path
+
             # if it hasn't been visited 
                 # check if its the target 
                     # Return the path 
