@@ -103,9 +103,10 @@ class Graph:
         # while the queue is not empty
         while queue.size() > 0:
             # dequeue the first PATH
-            
+            current_path = queue.dequeue()
+            current_node = current_path[-1]
             # grab the last vertex in the path
-
+            
             # if it hasn't been visited 
                 # check if its the target 
                     # Return the path 
