@@ -108,7 +108,10 @@ class Graph:
             # grab the last vertex in the path
             
             # if it hasn't been visited 
+            if current_node == destination_vertex:
+                return current_path
                 # check if its the target 
+                
                     # Return the path 
                 # mark it as visited
                 # make new versions of the current path, with each neighbor added to them
