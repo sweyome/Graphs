@@ -87,7 +87,14 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+         # TODO
+        if visited is None:
+            visited=set()
+        visited.add(starting_vertex)
+        print(starting_vertex)
+        for child_vert in self.vertices[starting_vertex]:
+            if child_vert not in visited:
+                self.dft_recursive(child_vert, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -96,18 +103,18 @@ class Graph:
         breath-first order.
         """
         # create a empty queue, and enqueue a PATH to the starting vertex
-        queue = Queue()
-        queue.enqueue([starting_vertex])
+        neighbors_to_visit = Queue()
+        neighbors_to_visit.enqueue([starting_vertex])
         # create a set for visited vertices
-        visited = set()
+        visited_vertices = set()
         # while the queue is not empty
-        while queue.size() > 0:
+        while neighbors_to_visit.size() > 0:
             # dequeue the first PATH
-            current_path = queue.dequeue()
+            current_path = neighbors_to_visit.dequeue()
             # grab the last vertex in the path
             current_vertex = current_path[-1]
             # if it hasn't been visited 
-            if current_vertex[-1] == destination_vertex:
+            if current_vertex == destination_vertex:
                 return current_path
                 # check if its the target 
 
