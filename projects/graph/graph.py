@@ -97,18 +97,17 @@ class Graph:
         """
         # create a empty queue, and enqueue a PATH to the starting vertex
         queue = Queue()
-        # queue.enqueue([starting_vertex])
-        # create a set for visited vertices
         queue.enqueue([starting_vertex])
+        # create a set for visited vertices
+        visited = set()
         # while the queue is not empty
         while queue.size() > 0:
             # dequeue the first PATH
             current_path = queue.dequeue()
-            current_vertex = current_path[-1]
             # grab the last vertex in the path
-            
+            current_vertex = current_path[-1]
             # if it hasn't been visited 
-            if current_vertex == destination_vertex:
+            if current_vertex[-1] == destination_vertex:
                 return current_path
                 # check if its the target 
 
@@ -118,6 +117,7 @@ class Graph:
                     visited.add(current_vertex)
                     edges = self.get_neighbors(current_vertex)
                 # mark it as visited
+                visited.add(current_vertex)
                 # make new versions of the current path, with each neighbor added to them
                     # duplicate the path
                     # add the neighbor
