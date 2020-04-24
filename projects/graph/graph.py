@@ -114,17 +114,13 @@ class Graph:
             # grab the last vertex in the path
             current_vertex = current_path[-1]
             # if it hasn't been visited 
-            if current_vertex == destination_vertex:
-                return current_path
+            if current_vertex not in visited_vertices:
                 # check if its the target 
-
+                if current_vertex == destination_vertex:
                     # Return the path 
-            else:
-                if current_vertex not in visited:
-                    visited.add(current_vertex)
-                    edges = self.get_neighbors(current_vertex)
+                    return current_path
                 # mark it as visited
-                visited.add(current_vertex)
+                visited_vertices.add(current_vertex)
                 # make new versions of the current path, with each neighbor added to them
                     # duplicate the path
                     # add the neighbor
