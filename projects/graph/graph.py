@@ -88,13 +88,13 @@ class Graph:
         This should be done using recursion.
         """
          # TODO
-        if visited is None:
-            visited=set()
-        visited.add(starting_vertex)
-        print(starting_vertex)
-        for child_vert in self.vertices[starting_vertex]:
-            if child_vert not in visited:
-                self.dft_recursive(child_vert, visited)
+        # if visited is None:
+        #     visited=set()
+        # visited.add(starting_vertex)
+        # print(starting_vertex)
+        # for child_vert in self.vertices[starting_vertex]:
+        #     if child_vert not in visited:
+        #         self.dft_recursive(child_vert, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -109,7 +109,7 @@ class Graph:
         visited_vertices = set()
         # while the queue is not empty
         while neighbors_to_visit.size() > 0:
-            # dequeue the first PATH
+            # dequeue the first PATH in the queue
             current_path = neighbors_to_visit.dequeue()
             # grab the last vertex in the path
             current_vertex = current_path[-1]
@@ -122,16 +122,17 @@ class Graph:
                 # mark it as visited
                 visited_vertices.add(current_vertex)
                 # make new versions of the current path, with each neighbor added to them
+                for next_vertex in self.get_neighbors(current_vertex):
                     # duplicate the path
+                    new_path = list(current_path)
                     # add the neighbor
+                    new_path.append(next_vertex)
                     # add the new path to the queue
-                for edge in edges:
-                    path_dup = list(current_path)
-                    path_dup.append(edge)
-                    queue.enqueue(path_dup)
+                    neighbors_to_visit.enqueue(new_path)
+                
 
 
-        pass  # TODO
+        
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -139,7 +140,23 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        neighbors_to_visit = Stack()
+        visited_vertices = set()
+        neighbors_to_visit.push((starting_vertex, []))
+        while neighbors_to_visit.size() > 0:
+            current_vertex_plus_path = neighbors_to_visit.pop()
+            current_vertex = current_vertex_plus_path[0]
+            if current_vertex not in visited_vertices:
+                if current_vertex == destination_vertex:
+                    updated_path = current_vertex_plus_path[1] + [current_vertex]
+                    return updated_path
+                # Marked as visited 
+                visited_vertices.add(current_vertex)
+                # add neighbors to the stack
+                for neighbor in self.get_neighbors(current_vertex):
+                    updated_path = current_vertex_plus_path[1] + [current_vertex]
+                    neighbors_to_visit.push((neighbor, updated_path))
+
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
