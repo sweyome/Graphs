@@ -38,7 +38,7 @@ class Graph:
         # create a plan_to_visit queue and add starting_vertex to it
         plan_to_visit = Queue()
         plan_to_visit.enqueue(starting_vertex)
-        # create a Set for visited_vertices
+        # create a Set for visited_vertices_vertices
         visited_vertices = set()
         # while the plan_to_visit queue is not Empty:
         while plan_to_visit.size() > 0:
@@ -88,13 +88,23 @@ class Graph:
         This should be done using recursion.
         """
          # TODO
+        visited = set() 
+        if starting_vertex not in visited:
+            visited.add(starting_vertex)
+            for neighbor in self.get_neighbors(starting_vertex):
+                self.dft_recursive(neighbor, visited)
+                
         # if visited is None:
-        #     visited=set()
+        #     visited = set()    
+        # # Mark it as visited
         # visited.add(starting_vertex)
         # print(starting_vertex)
-        # for child_vert in self.vertices[starting_vertex]:
-        #     if child_vert not in visited:
-        #         self.dft_recursive(child_vert, visited)
+        # # Call dft_recursive on each neighbor
+        # for child_vertex in self.vertices[starting_vertex]:
+        #     if child_vertex not in visited:
+        #         print(child_vertex)
+        #         self.dft_recursive(child_vertex, visited)
+
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -133,7 +143,6 @@ class Graph:
 
 
         
-
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
@@ -166,8 +175,27 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
-
+         # TODO
+        if visited is None:
+            visited = set()
+        # Check to see if this is the initial start
+        if path is None:
+            path = []
+        # If not...
+        # Mark it as visited
+        visited.add(starting_vertex)
+        # append the starting_vertex onto the path
+        path = path + [starting_vertex]
+        # Check if we are at the target
+        if starting_vertex == destination_vertex:
+            return path
+        # Call dft_recursive on each neighbor
+        for child_vertex in self.get_neighbors(starting_vertex):
+            if child_vertex not in visited:
+                new_path = self.dfs_recursive(child_vertex, destination_vertex, visited, path)
+                if new_path:
+                    return new_path
+        return None
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
     # https://github.com/LambdaSchool/Graphs/blob/master/objectives/breadth-first-search/img/bfs-visit-order.png
