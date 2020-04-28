@@ -1,37 +1,64 @@
-from graph import Graph
 
 def earliest_ancestor(ancestors, starting_node):
-    '''
-    find earliest ancestor of a graph using dfs
-    '''
+    q = Queue()
+    q.enqueue([starting_node])
+    longest_path = []
+    visited = set()
 
-    graph = Graph()
-    paths = []
+    while q.size() > 0:
+        path = q.dequeue()
+        v = path[-1]
 
-    # add vertex
-    for vertex in range(0, 20):
-        graph.add_vertex(vertex)
-        # print(graph.vertices)
+        if v not in visited:
+            visited.add(v)
 
-    # add edge
-    for ancestor in ancestors:
-        graph.add_edge(ancestor[0], ancestor[1])
-        # print(graph.vertices)
+        if len(path) > len(longest_path):
+            longest_path = path
 
-    for vertex in graph.vertices:
-        if graph.dfs(vertex, starting_node) != None and len(graph.dfs(vertex, starting_node)) > 0:
-            paths.append(graph.dfs(vertex, starting_node))
-        # print(paths)
+        for i in range(len(ancestors)):
+            if ancestors[i][1] is v:
+                new_path = path.copy()
+                new_path.append(ancestors[i][0])
+                q.enqueue(new_path)
+        print('longest_path', longest_path)
 
-    if len(paths) == 1:
-        return -1
+    earliest = longest_path.pop()
 
-    # find earliest neighbor
-    start_path = paths[0]
-    for path in paths:
-        if len(path) > len(start_path) or len(path) == len(start_path) and path[0] < start_path[0]:
-            start_path = path
-        # print(path)
-        # print(start_path)
+    if earliest is starting_node:
+        earliest = -1
+    return earliest
 
-    return start_path[0]
+
+
+class Queue():
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, value):
+        self.queue.append(value)
+
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+
+    def size(self):
+        return len(self.queue)
+
+
+class Stack():
+    def __init__(self):
+        self.stack = []
+
+    def push(self, value):
+        self.stack.append(value)
+
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop()
+        else:
+            return None
+
+    def size(self):
+        return len(self.stack)

@@ -80,20 +80,24 @@ class Graph:
                     if neighbor not in visited_vertices:
                         plan_to_visit.push(neighbor)
 
-    def dft_recursive(self, starting_vertex):
+
+    def dft_recursive(self, starting_vertex, visited = set()):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
-
         This should be done using recursion.
         """
-         # TODO
-        visited = set() 
-        if starting_vertex not in visited:
+        if visited is None: 
+            visited = set()
+       
+        if starting_vertex not in visited: 
+      
             visited.add(starting_vertex)
+            print(starting_vertex)
+        
             for neighbor in self.get_neighbors(starting_vertex):
                 self.dft_recursive(neighbor, visited)
-                
+
         # if visited is None:
         #     visited = set()    
         # # Mark it as visited
@@ -139,61 +143,57 @@ class Graph:
                     new_path.append(next_vertex)
                     # add the new path to the queue
                     neighbors_to_visit.enqueue(new_path)
-                
 
-
-        
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        neighbors_to_visit = Stack()
-        visited_vertices = set()
-        neighbors_to_visit.push((starting_vertex, []))
-        while neighbors_to_visit.size() > 0:
-            current_vertex_plus_path = neighbors_to_visit.pop()
-            current_vertex = current_vertex_plus_path[0]
-            if current_vertex not in visited_vertices:
-                if current_vertex == destination_vertex:
-                    updated_path = current_vertex_plus_path[1] + [current_vertex]
-                    return updated_path
-                # Marked as visited 
-                visited_vertices.add(current_vertex)
-                # add neighbors to the stack
-                for neighbor in self.get_neighbors(current_vertex):
-                    updated_path = current_vertex_plus_path[1] + [current_vertex]
-                    neighbors_to_visit.push((neighbor, updated_path))
+        # create a plan_to_visit stack and add starting_vertex to it
+        #create a stack
+        s = Stack()
+        #add starting vertex to the stack 
+        s.push( [starting_vertex] )
+        #create a set to store visted vertexes 
+        visited = set()
+        #while the stack is not empty...
+        while s.size() > 0: 
+            #pop the first path
+            path = s.pop()
+            #grab the vertex
+            v = path[-1]
+            if v not in visited: 
+                visited.add(v)
+                if v == destination_vertex: 
+                    return path
+                for neighbor in self.get_neighbors(v):
+                    path_copy = path.copy()
+                    path_copy.append(neighbor)
+                    s.push(path_copy)
 
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
-
         This should be done using recursion.
         """
-         # TODO
-        if visited is None:
+        if visited is None: 
             visited = set()
-        # Check to see if this is the initial start
-        if path is None:
+        if path is None: 
             path = []
-        # If not...
-        # Mark it as visited
-        visited.add(starting_vertex)
-        # append the starting_vertex onto the path
-        path = path + [starting_vertex]
-        # Check if we are at the target
-        if starting_vertex == destination_vertex:
-            return path
-        # Call dft_recursive on each neighbor
-        for child_vertex in self.get_neighbors(starting_vertex):
-            if child_vertex not in visited:
-                new_path = self.dfs_recursive(child_vertex, destination_vertex, visited, path)
-                if new_path:
+        if starting_vertex not in visited: 
+            visited.add(starting_vertex)
+            path_copy = path.copy()
+            path_copy.append(starting_vertex)
+            if starting_vertex == destination_vertex: 
+                return path_copy
+            for neighbor in self.get_neighbors(starting_vertex):
+                new_path = self.dfs_recursive(neighbor, destination_vertex, visited, path_copy)
+                if new_path is not None: 
                     return new_path
         return None
 if __name__ == '__main__':
