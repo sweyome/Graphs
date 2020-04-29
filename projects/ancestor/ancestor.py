@@ -1,12 +1,12 @@
 
 def earliest_ancestor(ancestors, starting_node):
-    q = Queue()
-    q.enqueue([starting_node])
+    neighbors_to_visit = Queue()
+    neighbors_to_visit.enqueue([starting_node])
     longest_path = []
     visited = set()
 
-    while q.size() > 0:
-        path = q.dequeue()
+    while neighbors_to_visit.size() > 0:
+        path = neighbors_to_visit.dequeue()
         v = path[-1]
 
         if v not in visited:
@@ -19,7 +19,7 @@ def earliest_ancestor(ancestors, starting_node):
             if ancestors[i][1] is v:
                 new_path = path.copy()
                 new_path.append(ancestors[i][0])
-                q.enqueue(new_path)
+                neighbors_to_visit.enqueue(new_path)
         print('longest_path', longest_path)
 
     earliest = longest_path.pop()
