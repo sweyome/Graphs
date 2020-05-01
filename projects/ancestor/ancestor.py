@@ -14,18 +14,23 @@ def earliest_ancestor(ancestors, starting_node):
 
         if len(path) > len(longest_path):
             longest_path = path
-
+        
         for i in range(len(ancestors)):
+
             if ancestors[i][1] is v:
                 new_path = path.copy()
                 new_path.append(ancestors[i][0])
                 neighbors_to_visit.enqueue(new_path)
         print('longest_path', longest_path)
 
+        
     earliest = longest_path.pop()
-
+    
     if earliest is starting_node:
         earliest = -1
+    elif len(path) == len(longest_path):
+            if path[-1] < longest_path[-1]:
+                longest_path = path 
     return earliest
 
 
