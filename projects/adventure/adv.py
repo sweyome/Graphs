@@ -36,8 +36,21 @@ exits = player.current_room.get_exits()
 # traversal_path = ['n', 'n']
 traversal_path = []
 
+x = random([1,2,3,4])
+print('x',x)
+room_id_log = []
 
+# Game plan
 
+while len(traversal_path) < 900:
+    print('traversal_pathLength: ', len(traversal_path))
+
+    for direction in exits:
+        print('Direction: ', direction)
+        if direction == 'n' and x ==1:
+            traversal_path.append(direction)
+            player.travel(direction)
+            print('currentRoomId ', current_room_id)
 # TRAVERSAL TEST
 visited_rooms = set()
 player.current_room = world.starting_room
