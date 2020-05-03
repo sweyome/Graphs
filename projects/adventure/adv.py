@@ -61,6 +61,14 @@ while len(traversal_path) < 900:
             print ("current room Id :", current_room_id)
             traversal_path.append(direction)
             player.travel(direction)
+
+        elif direction == 'w' and x == 4:
+            print ("current room Id :", current_room_id)
+            traversal_path.append(direction)
+            player.travel(direction)
+
+        else:
+            pass
         
 # TRAVERSAL TEST
 visited_rooms = set()
